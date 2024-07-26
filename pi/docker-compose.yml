@@ -1,0 +1,5 @@
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:80" # change to 8080 once nginx is setup at 80
