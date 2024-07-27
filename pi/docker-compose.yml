@@ -9,4 +9,5 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/conf.df:/etc/nginx/conf.d
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx
