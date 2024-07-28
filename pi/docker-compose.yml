@@ -3,6 +3,7 @@ services:
     build: ./web
     ports:
       - "5000:80"
+    restart: unless-stopped
 
   nginx:
     image: nginx:stable-alpine3.19-perl
@@ -11,3 +12,24 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/log:/var/log/nginx
+    restart: unless-stopped
+      
+  tailscale:
+    image: tailscale/tailscale:stable
+    # hostname?
+    environment:
+      - TS_AUTHKEY=${TAILSCALE_API_KEY}
+      - TS_HOSTNAME=${TAILSCALE_HOSTNAME}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+
+    volumes:
+      - ./tailscale/state:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+
+    network_mode: "host"
+
+    restart: unless-stopped

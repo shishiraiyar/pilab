@@ -5,6 +5,7 @@ visitCount = 0
 
 @app.route('/')
 def hello_world():
+    visitCount += 1
     return f'Hello, World! This page has been visited {visitCount} times'
 
 if __name__ == '__main__':
